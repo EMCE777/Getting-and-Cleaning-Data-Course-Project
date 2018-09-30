@@ -2,8 +2,6 @@
 
 library(dplyr)
 
-setwd("C:/Users/MS/Desktop/Coursera/JH Data Science/Projects/Proyectos/Prog_Assigment4")
-
 # Downloading file/unzipping if neccesary
 if (!file.exists("GCD_CourseProject.zip")){
         fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
@@ -12,14 +10,14 @@ if (!file.exists("GCD_CourseProject.zip")){
 }
 
 # We assign train data into data frames.
-train_x <- read.table('./UCI HAR Dataset/train/X_train.txt', header = FALSE)
-train_y <- read.table('./UCI HAR Dataset/train/y_train.txt', header = FALSE)
-train_subject <- read.table('./UCI HAR Dataset/train/subject_train.txt',header = FALSE)
+train_x <- read.table("./UCI HAR Dataset/train/X_train.txt", header = FALSE)
+train_y <- read.table("./UCI HAR Dataset/train/y_train.txt", header = FALSE)
+train_subject <- read.table("./UCI HAR Dataset/train/subject_train.txt",header = FALSE)
 
 # We assign test data into data frames.
-test_x <- read.table('./UCI HAR Dataset/test/X_test.txt', header = FALSE)
-test_y <- read.table('./UCI HAR Dataset/test/y_test.txt', header = FALSE)
-test_subject <- read.table('./UCI HAR Dataset/test/subject_test.txt', header = FALSE)
+test_x <- read.table("./UCI HAR Dataset/test/X_test.txt", header = FALSE)
+test_y <- read.table("./UCI HAR Dataset/test/y_test.txt", header = FALSE)
+test_subject <- read.table("./UCI HAR Dataset/test/subject_test.txt", header = FALSE)
 
 #Merge train data frames
 merge_train <-  data.frame(train_subject, train_y, train_x)
@@ -33,12 +31,12 @@ features <- read.table("./UCI HAR Dataset/features.txt", header=FALSE)
 features <- as.character(features$V2)
 
 #rename columns of merged data frame and assign features data into the columns
-names(merge_all) <- c(c('subject', 'activity'), features)
+names(merge_all) <- c(c("subject", "activity"), features)
 
 #2 - Extract colums with mean and standard deviation
 
 #returns cnumer for mean|std in features
-mean.std <- grep('mean|std', features)
+mean.std <- grep("mean|std", features)
 
 #subsets mean|std colums in data set (+2 to match data frame with extra data first 2 columns)
 merge_all_rename <- merge_all[,c(1,2,mean.std + 2)]
@@ -46,7 +44,7 @@ merge_all_rename <- merge_all[,c(1,2,mean.std + 2)]
 
 #3 - Uses descriptive activity names to name the activities in the data set
 
-activity_labels <- read.table('./UCI HAR Dataset/activity_labels.txt', header = FALSE)
+activity_labels <- read.table("./UCI HAR Dataset/activity_labels.txt", header = FALSE)
 activity_labels <- as.character(activity_labels$V2)
 merge_all_rename$activity <- activity_labels[merge_all_rename$activity]
 
